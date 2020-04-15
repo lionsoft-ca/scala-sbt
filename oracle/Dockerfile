@@ -1,7 +1,7 @@
 #
 # Scala and sbt Dockerfile
 #
-# https://github.com/hseeberger/scala-sbt
+# https://github.com/lionsoft-ca/scala-sbt
 #
 
 # Pull base image
@@ -17,6 +17,13 @@ ARG USER_ID
 ENV USER_ID ${USER_ID:-1001}
 ARG GROUP_ID 
 ENV GROUP_ID ${GROUP_ID:-1001}
+
+# Install docker
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN apt-key fingerprint 0EBFCD88
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+RUN apt-get update
+RUN apt-get -y install docker-ce docker-ce-cli
 
 # Install sbt
 RUN \
